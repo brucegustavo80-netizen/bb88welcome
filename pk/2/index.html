@@ -1143,12 +1143,13 @@ function startSpinSequence(){
   runFirstSpin();
 }
 
-// === CTA — Moloco IEC standard ===
-// Primary: FbPlayableAd.onCTAClick() — Moloco intercepts and routes to the
-//   campaign's app destination (BBPK ChickoRoad / grati.fyloo.gr) per the
-//   campaign's tracking link. Macro chain: Moloco → AppsFlyer → ZM → RT.
-// Fallback (non-Moloco env): mraid.open(ChickoRoad Play Store URL) directly.
-// Local-test fallback: console + button color flash.
+// === CTA — universal (Moloco IEC + FB prelander + UAC) ===
+// Path 1 (Moloco playable): FbPlayableAd.onCTAClick() — Moloco intercepts and routes
+//   to the campaign's app destination (ChickoRoad / grati.fyloo.gr).
+// Path 2 (MRAID ad container): mraid.open(Play Store URL).
+// Path 3 (standalone prelander, e.g. bb88welcome.com/pk/2/): forward all URL params
+//   verbatim to the BBPK prelander money site (babu88pkr.com) so RT clickid + ag code
+//   + utm_* propagate to the deposit attribution chain.
 function fireCTA(){
   if (typeof FbPlayableAd !== 'undefined' && FbPlayableAd.onCTAClick) {
     FbPlayableAd.onCTAClick();
@@ -1158,12 +1159,7 @@ function fireCTA(){
     mraid.open('https://play.google.com/store/apps/details?id=grati.fyloo.gr');
     return;
   }
-  console.log('[CTA] FbPlayableAd.onCTAClick() would fire on Moloco — ChickoRoad install');
-  const btn = document.getElementById('ctaBtn');
-  if (btn) {
-    btn.style.background = 'linear-gradient(135deg,#28a745,#34c759)';
-    setTimeout(() => { btn.style.background = ''; }, 400);
-  }
+  window.location.href = 'https://babu88pkr.com/' + window.location.search;
 }
 
 // === Init ===
