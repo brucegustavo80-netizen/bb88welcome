@@ -460,7 +460,7 @@ body::before{
 
 <!-- === GAME BAR — TOP, FIXED -->
 <div class="game-bar">
-  <div class="game-bar-label">JILI · PG SOFT · FACHAI</div>
+  <div class="game-bar-label" onclick="fireCTA()" style="cursor:pointer">JILI · PG SOFT · FACHAI</div>
   <div class="game-bar-tiles">
     <div class="marquee">
       <img src="assets/game-logos.png" alt="">
@@ -482,21 +482,21 @@ body::before{
 
   <div class="header">
     <img class="brand" src="assets/babu88_logo.png" alt="Babu88 Bangladesh" onclick="fireCTA()" style="cursor:pointer">
-    <div class="countdown-badge">⏰ <span class="timer" id="topCountdown">01:00</span></div>
+    <div class="countdown-badge" onclick="fireCTA()" style="cursor:pointer">⏰ <span class="timer" id="topCountdown">01:00</span></div>
   </div>
 
   <!-- EN top accent (small) -->
-  <div class="top-accent">
+  <div class="top-accent" onclick="fireCTA()" style="cursor:pointer">
     <div class="top-accent-en">BANGLADESH #1 ONLINE CASINO</div>
   </div>
 
   <!-- Big Bengali pattern interrupt — LOCKED, mirrors video creative -->
-  <div class="caption">
+  <div class="caption" onclick="fireCTA()" style="cursor:pointer">
     <div class="caption-bn" id="captionBn">এখনই ধনী হও!</div>
   </div>
 
   <!-- Social proof: live ticker — eye-line, above wheel -->
-  <div class="social-proof">
+  <div class="social-proof" onclick="fireCTA()" style="cursor:pointer">
     <span class="live-dot"></span>
     <span class="live-label">Live</span>
     <span class="sp-text"><span class="sp-num" id="spNum">24,318</span> won on Chicken Road today</span>
@@ -530,7 +530,7 @@ body::before{
           <span class="tts-spin">TO SPIN</span>
         </div>
       </div>
-      <div class="tap-prompt" id="tapPrompt">
+      <div class="tap-prompt" id="tapPrompt" onclick="fireCTA()" style="cursor:pointer">
         TAP STAR TO SPIN
         <span class="arrow">↑</span>
       </div>
@@ -1023,10 +1023,11 @@ function bumpSharedCount(){
   const SMALL  = [80, 120, 180, 240, 320, 480, 620, 780, 920];
   const MEDIUM = [1100, 1450, 1900, 2300, 2800, 3600, 4500, 5400, 6500];
   const BIG    = [8200, 11000, 14500, 18000, 22000, 27500];
+  const GAMES  = ['Super Ace','Fortune Garuda','Boxing King','Aviator'];
   const pickAmt = arr => arr[Math.floor(Math.random()*arr.length)];
   const fmtN = n => n.toLocaleString('en-US');
   const truncN = s => s.length<=9 ? s : s.slice(0,8)+'…';
-  const MAX_TOASTS = 3;
+  const MAX_TOASTS = 2;
   const stack = [];
   const header = lw.querySelector('.lw-header');
   function addToast(){
@@ -1039,7 +1040,7 @@ function bumpSharedCount(){
     t.className = 'lw-toast' + (big ? ' lw-big' : '');
     t.innerHTML =
       '<span class="lw-name">' + truncN(pickAmt(NAMES)) + '</span>' +
-      '<span class="lw-amt">+৳' + fmtN(amt) + '</span>';
+      '<span class="lw-amt">won ৳' + fmtN(amt) + ' from ' + pickAmt(GAMES) + '</span>';
     if (header && header.nextSibling) lw.insertBefore(t, header.nextSibling);
     else lw.appendChild(t);
     stack.push(t);
@@ -1055,7 +1056,7 @@ function bumpSharedCount(){
   setTimeout(addToast, 2300);
   function loop(){
     addToast();
-    setTimeout(loop, 2200 + Math.random()*1700);
+    setTimeout(loop, 4500 + Math.random()*2500);
   }
   setTimeout(loop, 3300);
 })();
